@@ -1,0 +1,11 @@
+let b > 6
+let c > 6
+let d > <?b + c?>
+let e > 12
+
+print b
+print c
+
+if[e == c+d]
+if[c+d == d+c]
+if[c+d == e]
