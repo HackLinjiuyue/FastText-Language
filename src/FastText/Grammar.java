@@ -1,3 +1,5 @@
+package FastText;
+
 public class Grammar
 {
 	public static final String FT_letValueA = "let";
