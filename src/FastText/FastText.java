@@ -10,6 +10,7 @@ import java.util.HashMap;
 import Exceptions.NameNotDefine;
 import Exceptions.SymbolSyntaxError;
 import Exceptions.SyntaxError;
+import java.util.*;
 
 /*
 *======================================
@@ -34,13 +35,13 @@ public class FastText {
 		}
 		this.file = new File(path);
 		getReader();
-		ReadLine();
+		readLineFromFile();
 	}
 
 	public void openFile(String path) {
 		this.file = new File(path);
 		getReader();
-		ReadLine();
+		readLineFromFile();
 	}
 
 	static void getReader() {
@@ -50,11 +51,27 @@ public class FastText {
 			e.printStackTrace();
 		}
 	}
-
-	static void ReadLine() {
+	
+	private static void readLineFromFile(){
+		ArrayList FILE_LINE = new ArrayList();
 		String line;
-		try {
-			while ((line = reader.readLine()) != null) {
+		try
+		{
+			while ((line = reader.readLine()) != null)
+			{
+				FILE_LINE.add(line);
+			}
+			
+			ReadLine(FILE_LINE);
+		}
+		catch (IOException e)
+		{}
+	}
+	
+
+	static void ReadLine(Collection c) {
+		
+			for(String line:c) {
 				Countline++;
 				line = line.replaceAll(" ", "");
 				// System.out.println(line);
@@ -128,8 +145,7 @@ public class FastText {
 					// throw new SyntaxError(Countline);
 				}
 			}
-		} catch (IOException e) {
-		}
+		
 	}
 
 	static void letValue(String name, String type, String value) {
