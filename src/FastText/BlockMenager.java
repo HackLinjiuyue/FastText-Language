@@ -1,15 +1,29 @@
 package FastText;
 import java.util.*;
+import Exceptions.*;
 
-public class BlockMenager{
+public class BlockMenager
+{
+	private static HashMap<String,Block> blocks = new HashMap<String,Block>();
 	
-	private static HashMap<String,Block> all_blocks;
-	
-	public static void addBlock(String name,Block b){
-		all_blocks.put(name,b);
+	static void addBlock(String name,Block b){
+		blocks.put(name,b);
 	}
 	
-	public static Block getBlock(String name){
-		return all_blocks.get(name);
+	static Block getBlock(String name){
+		//printAll();
+		if(blocks.containsKey(name)){
+			return blocks.get(name);
+		}
+		else{
+			throw new NoSuchBlock(name);
+		}
+	}
+	private static void printAll(){
+		System.out.print("All BLOCK =");
+		for(String c:blocks.keySet()){
+			System.out.print(c+" ");
+		}
+		System.out.println("");
 	}
 }

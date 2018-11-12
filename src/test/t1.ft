@@ -1,7 +1,8 @@
-let b > 6
-let c > 6
-let d > 6
-let e > 12
+START
+let b = 6
+let c = 6
+let d = 6
+let e = 12
 
 print b
 print c
@@ -9,3 +10,14 @@ print c
 if[e <= c+d]
 if[c+d > d+c]
 if[c+d >= e]
+END
+
+DEB m START
+
+let f = 8
+print f
+
+END
+
+run m
+run main

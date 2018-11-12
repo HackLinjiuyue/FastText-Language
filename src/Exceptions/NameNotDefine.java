@@ -1,8 +1,9 @@
 package Exceptions;
+import FastText.*;
 
 public class NameNotDefine extends Error
 {
 	public NameNotDefine(){
-		super("Name is not define");
+		super("at:"+Share.lineCount+" Name is not define");
 	}
 }

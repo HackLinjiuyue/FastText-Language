@@ -62,22 +62,69 @@ public class FastText {
 				FILE_LINE.add(line);
 			}
 			
-			ReadLine(FILE_LINE);
+			catchBlock(FILE_LINE);
 		}
 		catch (IOException e)
 		{}
 	}
 	
+	static void catchBlock(Collection c){
+		boolean isin = false;
+		String now = "main";
+		for(String line:c){
+			Share.lineCount++;
+			line = line.replaceAll(" ", "").replaceAll("\t","");
+			//System.out.println(line);
+			
+			if(line.startsWith(Grammar.FT_blockC)){
+				isin = false;
+			}
+			
+			if(isin){
+				BlockMenager.getBlock(now).addLine(line);
+				//System.out.println(line);
+			}
+			
+			if(line.startsWith(Grammar.FT_blockA)){
+				
+				String BLOCK_NAME = line.substring(
+					line.indexOf(Grammar.FT_blockA)+Grammar.FT_blockA.length(),
+					line.indexOf(Grammar.FT_blockB));
+				
+				isin = true;
+				now = BLOCK_NAME;
+					
+				BlockMenager.addBlock(now,new Block());
+			}
+			
+			if(line.startsWith(Grammar.FT_blockB)){
+				//System.out.println("yes");
+				isin = true;
+				now = "main";
+				
+				BlockMenager.addBlock(now,new Block());
+			}
+			if(line.startsWith(Grammar.FT_runb)){
+				if(!isin){
+					String BLOCK_NAME = line.substring(Grammar.FT_runb.length(),line.length());
+					//System.out.println(BLOCK_NAME);
 
-	static void ReadLine(Collection c) {
-		
+					BlockMenager.getBlock(BLOCK_NAME).runBlock();
+				}
+					
+			}
+		}
+	}
+
+	public static void ReadLine(Collection c) {
+		//LocalValues.printAll();
 			for(String line:c) {
 				Countline++;
-				line = line.replaceAll(" ", "");
+				line = line.replaceAll(" ", "").replaceAll("\t","");
 				// System.out.println(line);
 				// System.out.println(line.indexOf(Grammar.FT_letValueB));
 				try {
-
+	
 					if (line.startsWith(Grammar.FT_mark)) {
 						continue;
 					}
@@ -138,6 +185,17 @@ public class FastText {
 						}
 
 						outValue(VALUE_NAME);
+					}
+					
+					/*
+					 * run [BLOCK NAME]
+					*/
+					
+					if(line.startsWith(Grammar.FT_runb)){
+						String BLOCK_NAME = line.substring(Grammar.FT_runb.length(),line.length());
+						//System.out.println(BLOCK_NAME);
+
+						BlockMenager.getBlock(BLOCK_NAME).runBlock();
 					}
 
 				} catch (StringIndexOutOfBoundsException e) {

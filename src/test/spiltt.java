@@ -2,7 +2,7 @@ package test;
 
 public class spiltt
 {
-	public static void main(String[] ar){
+	public static void main(String ar){
 		String a = "a(b)";
 		a = a.replace(" ","");
 		

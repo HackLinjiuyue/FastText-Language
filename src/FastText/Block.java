@@ -1,12 +1,21 @@
 package FastText;
-import java.lang.reflect.*;
 import java.util.*;
 
 public class Block
 {
+	//String name;
+	private ArrayList<String> lines;
 	
-	private ArrayList<String> inside = new ArrayList<String>();
+	public Block(){
+		
+		this.lines = new ArrayList<String>();
+	}
 	
+	public void addLine(String line){
+		lines.add(line);
+	}
 	
-	
+	public void runBlock(){
+		FastText.ReadLine(this.lines);
+	}
 }

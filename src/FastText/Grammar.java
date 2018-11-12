@@ -3,7 +3,7 @@ package FastText;
 public class Grammar
 {
 	public static final String FT_letValueA = "let";
-	public static final String FT_letValueB = ">";
+	public static final String FT_letValueB = "=";
 	
 	public static final String FT_out = "print";
 	
@@ -31,4 +31,10 @@ public class Grammar
 	public static final String FT_expB = "?>";
 	
 	public static final String FT_mark = "!#";
+	
+	public static final String FT_blockA = "DEB";
+	public static final String FT_blockB = "START";
+	public static final String FT_blockC = "END";
+	
+	public static final String FT_runb = "run";
 }
