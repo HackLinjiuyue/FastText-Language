@@ -233,10 +233,10 @@ public class BlockReader {
 					 
 					 //Can not import in block
 					
-//					if(line.startsWith(Grammar.FT_import)) {
-//						String NAME = line.substring(line.indexOf(Grammar.FT_import)+Grammar.FT_import.length(),line.length());
-//						Import.IMPORT_FILE(NAME);
-//					}
+					if(line.startsWith(Grammar.FT_import)) {
+						String NAME = line.substring(line.indexOf(Grammar.FT_import)+Grammar.FT_import.length(),line.length());
+						Import.IMPORT_FILE(NAME);
+					}
 					
 				} catch (StringIndexOutOfBoundsException e) {
 					e.printStackTrace();
@@ -268,6 +268,8 @@ public class BlockReader {
 			System.out.println(LocalValues.values.get(value));
 		} else if (LocalValues.NumValues.containsKey(value)) {
 			System.out.println(LocalValues.NumValues.get(value));
+		} else{
+			throw new NameNotDefine(value);
 		}
 	}
 

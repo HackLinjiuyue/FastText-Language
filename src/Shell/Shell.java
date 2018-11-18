@@ -20,7 +20,7 @@ public class Shell
 	@SuppressWarnings("resource")
 	public static void SHELL(){
 
-		System.out.println("the Shell for FastText BUILD 0.1");
+		System.out.println("the Shell for FastText "+Share.VERSION);
 		System.out.println("================Shell================");
 
 
