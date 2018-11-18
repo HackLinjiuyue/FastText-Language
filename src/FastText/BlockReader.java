@@ -20,7 +20,7 @@ import java.util.*;
 *======================================
 */
 
-public class FastText {
+public class BlockReader {
 	static File file;
 	static BufferedReader reader;
 	static int Countline = 0;

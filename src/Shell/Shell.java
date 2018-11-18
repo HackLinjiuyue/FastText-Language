@@ -9,7 +9,12 @@ public class Shell
 	private static String sline;
 	
 	static ArrayList<String> line = new ArrayList<String>();
+	
 	public static void main(String[] a){
+		SHELL();
+	}
+	
+	public static void SHELL(){
 
 		System.out.println("the Shell for FastText BUILD 0.1");
 		System.out.println("========Shell========");
@@ -20,7 +25,7 @@ public class Shell
 				System.out.print(">>");
 				sline = new Scanner(System.in).nextLine();
 				line.add(sline);
-				FastText.ReadLine(line);
+				BlockReader.ReadLine(line);
 				line.clear();
 			}else{
 				System.out.print(NOW+" >>");
