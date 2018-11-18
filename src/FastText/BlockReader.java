@@ -20,10 +20,11 @@ import java.util.*;
 *======================================
 */
 
-public class FastText {
+public class BlockReader {
 	static File file;
 	static BufferedReader reader;
 	static int Countline = 0;
+	static String originLine;
 
 	// HashMap LocalValues.values = new HashMap();
 	// HashMap <String,Integer> LocalValues.NumValues = new
@@ -68,11 +69,12 @@ public class FastText {
 		{}
 	}
 	
-	static void catchBlock(Collection c){
+	static void catchBlock(Collection<String> c){
 		boolean isin = false;
-		String now = "main";
+		String now = Share.MAIN_BLOCK;
 		for(String line:c){
 			Share.lineCount++;
+			letValue("FT__LINE__","int",String.valueOf(Share.lineCount));
 			line = line.replaceAll(" ", "").replaceAll("\t","");
 			//System.out.println(line);
 			
@@ -100,7 +102,7 @@ public class FastText {
 			if(line.startsWith(Grammar.FT_blockB)){
 				//System.out.println("yes");
 				isin = true;
-				now = "main";
+				now = Share.MAIN_BLOCK;
 				
 				BlockMenager.addBlock(now,new Block());
 			}
@@ -116,10 +118,13 @@ public class FastText {
 		}
 	}
 
-	public static void ReadLine(Collection c) {
+	public static void ReadLine(Collection<String> c) {
+		String VALUE;
+		String TYPE;
 		//LocalValues.printAll();
 			for(String line:c) {
 				Countline++;
+				originLine = line;
 				line = line.replaceAll(" ", "").replaceAll("\t","");
 				// System.out.println(line);
 				// System.out.println(line.indexOf(Grammar.FT_letValueB));
@@ -130,7 +135,7 @@ public class FastText {
 					}
 
 					/*
-					 * let [NAME] > [VALUE]|([Expression])
+					 * let [NAME] > [VALUE]|([Expression])|%r[origin]
 					 */
 
 					if (line.startsWith(Grammar.FT_letValueA)) {
@@ -138,11 +143,16 @@ public class FastText {
 								line.indexOf(Grammar.FT_letValueA) + Grammar.FT_letValueA.length(),
 								line.indexOf(Grammar.FT_letValueB));
 
-						String VALUE = line.substring(line.indexOf(Grammar.FT_letValueB) + 1, line.length());
-
+						VALUE = line.substring(line.indexOf(Grammar.FT_letValueB) + 1, line.length());
+						//System.out.println(VALUE);
+						if(VALUE.startsWith(Grammar.FT_originA)) {
+							VALUE = originLine.substring(originLine.indexOf(Grammar.FT_originA) + Grammar.FT_originA.length(),
+													originLine.indexOf(Grammar.FT_originB));
+						}
+						
 						// System.out.println("VALUE="+VALUE);
 						if (Expression.isNotExpression(VALUE)) {
-							String TYPE = VALUE.matches("\\d+") ? "int" : "str";
+							TYPE = VALUE.matches("\\d+") ? "int" : "str";
 							letValue(VALUE_NAME, TYPE, VALUE);
 
 							// System.out.println("VALUE_NAME="+VALUE_NAME);
@@ -151,22 +161,33 @@ public class FastText {
 						} else if (VALUE.startsWith(Grammar.FT_expA)) {
 							// System.out.println("is exp"+VALUE);
 							VALUE = String.valueOf(Expression.solveExpression(Expression.getExpression(VALUE)));
-							String TYPE = VALUE.matches("\\d+") ? "int" : "str";
+							TYPE = VALUE.matches("\\d+") ? "int" : "str";
 							letValue(VALUE_NAME, TYPE, VALUE);
-						}
+						} 
 
 					}
 
 					/*
-					 * if[Expression]
+					 * if[Expression] [->] [BLOCK]
 					 */
 
 					if (line.startsWith(Grammar.FT_ifConditionA)) {
 						String expression = line.substring(
 								line.indexOf(Grammar.FT_ifConditionA) + Grammar.FT_ifConditionA.length(),
 								line.indexOf(Grammar.FT_ifConditionB));
-						System.out.println(Condition.ifCondition(expression));
-
+						
+						String back = line.substring(line.indexOf(Grammar.FT_ifConditionB)+Grammar.FT_ifConditionB.length(),line.length());
+						
+						if(back.length() != 0){
+							if(back.startsWith(Grammar.FT_runb2)){
+								String block = back.substring(Grammar.FT_runb2.length(),back.length());
+								if(Condition.ifCondition(expression)){
+									runBlock(block);
+								}
+							}
+						}else{
+							System.out.println(Condition.ifCondition(expression));
+						}
 					}
 
 					/*
@@ -182,6 +203,7 @@ public class FastText {
 							int res = Expression.solveExpression(Expression.getExpression(VALUE_NAME));
 							letValue(String.valueOf(res), "int", String.valueOf(res));
 							VALUE_NAME = String.valueOf(res);
+							
 						}
 
 						outValue(VALUE_NAME);
@@ -204,6 +226,10 @@ public class FastText {
 				}
 			}
 		
+	}
+	
+	static void runBlock(String name){
+		BlockMenager.getBlock(name).runBlock();
 	}
 
 	static void letValue(String name, String type, String value) {

@@ -16,6 +16,6 @@ public class Block
 	}
 	
 	public void runBlock(){
-		FastText.ReadLine(this.lines);
+		BlockReader.ReadLine(this.lines);
 	}
 }

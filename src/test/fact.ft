@@ -1,0 +1,20 @@
+DEB def START
+	let step = 1
+	let br = 1
+	let num = 9
+	let result = 1
+	
+END
+
+START
+	let br = <?br+step?>
+	let result = <?result * br?>
+	if[br != num]->main
+END
+
+DEB pr START
+	print result
+END
+
+run def
+run main

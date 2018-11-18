@@ -6,11 +6,11 @@ public class BlockMenager
 {
 	private static HashMap<String,Block> blocks = new HashMap<String,Block>();
 	
-	static void addBlock(String name,Block b){
+	public static void addBlock(String name,Block b){
 		blocks.put(name,b);
 	}
 	
-	static Block getBlock(String name){
+	public static Block getBlock(String name){
 		//printAll();
 		if(blocks.containsKey(name)){
 			return blocks.get(name);

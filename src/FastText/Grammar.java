@@ -37,4 +37,9 @@ public class Grammar
 	public static final String FT_blockC = "END";
 	
 	public static final String FT_runb = "run";
+	public static final String FT_runb2 = "->";
+	
+	public static final String FT_originA = "r<";
+	public static final String FT_originB = ">";
+	
 }
