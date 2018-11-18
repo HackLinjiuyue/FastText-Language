@@ -42,4 +42,5 @@ public class Grammar
 	public static final String FT_originA = "r<";
 	public static final String FT_originB = ">";
 	
+	public static final String FT_import = "import";
 }

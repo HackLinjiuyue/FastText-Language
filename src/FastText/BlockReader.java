@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.management.GarbageCollectorMXBean;
 import java.util.HashMap;
 
 import Exceptions.NameNotDefine;
@@ -21,26 +22,26 @@ import java.util.*;
 */
 
 public class BlockReader {
-	static File file;
-	static BufferedReader reader;
-	static int Countline = 0;
-	static String originLine;
+	private static File file;
+	private static BufferedReader reader;
+	private static int Countline = 0;
+	private static String originLine;
 
 	// HashMap LocalValues.values = new HashMap();
 	// HashMap <String,Integer> LocalValues.NumValues = new
 	// HashMap<String,Integer>();
 
-	public void openAbsFile(String path) {
+	public static void openAbsFile(String path) {
 		if (path.substring(path.lastIndexOf(".") - 1, path.length()).equals("ft")) {
 
 		}
-		this.file = new File(path);
+		file = new File(path);
 		getReader();
 		readLineFromFile();
 	}
 
-	public void openFile(String path) {
-		this.file = new File(path);
+	public static void openFile(String path) {
+		file = new File(path);
 		getReader();
 		readLineFromFile();
 	}
@@ -75,7 +76,7 @@ public class BlockReader {
 		for(String line:c){
 			Share.lineCount++;
 			letValue("FT__LINE__","int",String.valueOf(Share.lineCount));
-			line = line.replaceAll(" ", "").replaceAll("\t","");
+			line = line.replaceAll("\t","");
 			//System.out.println(line);
 			
 			if(line.startsWith(Grammar.FT_blockC)){
@@ -88,6 +89,7 @@ public class BlockReader {
 			}
 			
 			if(line.startsWith(Grammar.FT_blockA)){
+				line = line.replaceAll(" ", "");
 				
 				String BLOCK_NAME = line.substring(
 					line.indexOf(Grammar.FT_blockA)+Grammar.FT_blockA.length(),
@@ -107,6 +109,7 @@ public class BlockReader {
 				BlockMenager.addBlock(now,new Block());
 			}
 			if(line.startsWith(Grammar.FT_runb)){
+				line = line.replaceAll(" ", "");
 				if(!isin){
 					String BLOCK_NAME = line.substring(Grammar.FT_runb.length(),line.length());
 					//System.out.println(BLOCK_NAME);
@@ -148,12 +151,10 @@ public class BlockReader {
 						if(VALUE.startsWith(Grammar.FT_originA)) {
 							VALUE = originLine.substring(originLine.indexOf(Grammar.FT_originA) + Grammar.FT_originA.length(),
 													originLine.indexOf(Grammar.FT_originB));
-						}
-						
-						// System.out.println("VALUE="+VALUE);
-						if (Expression.isNotExpression(VALUE)) {
-							TYPE = VALUE.matches("\\d+") ? "int" : "str";
-							letValue(VALUE_NAME, TYPE, VALUE);
+
+							letValue(VALUE_NAME, "str", VALUE);
+						} else if (Expression.isNotExpression(VALUE)) {
+							TYPE = VALUE.matches("^\\d{1,}") ? "int" : "str";
 
 							// System.out.println("VALUE_NAME="+VALUE_NAME);
 
@@ -219,7 +220,16 @@ public class BlockReader {
 
 						BlockMenager.getBlock(BLOCK_NAME).runBlock();
 					}
-
+					
+					/*
+					 * import [FILE NAME]
+					 * */
+					
+					if(line.startsWith(Grammar.FT_import)) {
+						String NAME = line.substring(line.indexOf(Grammar.FT_import)+Grammar.FT_import.length(),line.length());
+						Import.IMPORT_FILE(NAME);
+					}
+					
 				} catch (StringIndexOutOfBoundsException e) {
 					e.printStackTrace();
 					// throw new SyntaxError(Countline);

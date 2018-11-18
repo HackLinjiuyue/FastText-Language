@@ -1,5 +1,7 @@
 package Shell;
 import FastText.*;
+import lib.Init;
+
 import java.util.*;
 
 public class Shell
@@ -11,13 +13,15 @@ public class Shell
 	static ArrayList<String> line = new ArrayList<String>();
 	
 	public static void main(String[] a){
+		Init.INIT();
 		SHELL();
 	}
 	
+	@SuppressWarnings("resource")
 	public static void SHELL(){
 
 		System.out.println("the Shell for FastText BUILD 0.1");
-		System.out.println("========Shell========");
+		System.out.println("================Shell================");
 
 
 		while(true){

@@ -1,0 +1,9 @@
+START
+
+	!# AUTO IMPORT THIS FILE
+	
+	let __VERSION__ = r<FastText version = 0.5>
+	
+END
+
+run main
