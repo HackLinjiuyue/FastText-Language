@@ -70,9 +70,10 @@ public class FastText {
 	
 	static void catchBlock(Collection c){
 		boolean isin = false;
-		String now = "main";
+		String now = Share.MAIN_BLOCK;
 		for(String line:c){
 			Share.lineCount++;
+			letValue("FT__LINE__","int",String.valueOf(Share.lineCount));
 			line = line.replaceAll(" ", "").replaceAll("\t","");
 			//System.out.println(line);
 			
@@ -100,7 +101,7 @@ public class FastText {
 			if(line.startsWith(Grammar.FT_blockB)){
 				//System.out.println("yes");
 				isin = true;
-				now = "main";
+				now = Share.MAIN_BLOCK;
 				
 				BlockMenager.addBlock(now,new Block());
 			}
@@ -158,15 +159,26 @@ public class FastText {
 					}
 
 					/*
-					 * if[Expression]
+					 * if[Expression] [->] [BLOCK]
 					 */
 
 					if (line.startsWith(Grammar.FT_ifConditionA)) {
 						String expression = line.substring(
 								line.indexOf(Grammar.FT_ifConditionA) + Grammar.FT_ifConditionA.length(),
 								line.indexOf(Grammar.FT_ifConditionB));
-						System.out.println(Condition.ifCondition(expression));
-
+						
+						String back = line.substring(line.indexOf(Grammar.FT_ifConditionB)+Grammar.FT_ifConditionB.length(),line.length());
+						
+						if(back.length() != 0){
+							if(back.startsWith(Grammar.FT_runb2)){
+								String block = back.substring(Grammar.FT_runb2.length(),back.length());
+								if(Condition.ifCondition(expression)){
+									runBlock(block);
+								}
+							}
+						}else{
+							System.out.println(Condition.ifCondition(expression));
+						}
 					}
 
 					/*
@@ -182,6 +194,7 @@ public class FastText {
 							int res = Expression.solveExpression(Expression.getExpression(VALUE_NAME));
 							letValue(String.valueOf(res), "int", String.valueOf(res));
 							VALUE_NAME = String.valueOf(res);
+							
 						}
 
 						outValue(VALUE_NAME);
@@ -204,6 +217,10 @@ public class FastText {
 				}
 			}
 		
+	}
+	
+	static void runBlock(String name){
+		BlockMenager.getBlock(name).runBlock();
 	}
 
 	static void letValue(String name, String type, String value) {

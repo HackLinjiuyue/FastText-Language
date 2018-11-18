@@ -7,7 +7,7 @@ let e = 12
 print b
 print c
 
-if[e <= c+d]
+if[e <= c+d]->m
 if[c+d > d+c]
 if[c+d >= e]
 END
@@ -19,5 +19,4 @@ print f
 
 END
 
-run m
 run main
