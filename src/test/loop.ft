@@ -1,0 +1,15 @@
+START
+	print a
+	let a = <?a+step?>
+	if[a <= b]->main
+END
+
+DEB de START
+	let b = 10000
+	let a = 1
+	let step = 1
+END
+
+run de
+run main
+

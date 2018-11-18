@@ -39,7 +39,10 @@ public class Grammar
 	public static final String FT_runb = "run";
 	public static final String FT_runb2 = "->";
 	
+<<<<<<< HEAD
 	public static final String FT_originA = "r<";
 	public static final String FT_originB = ">";
 	
+=======
+>>>>>>> e7c0d2ef7262bd97b37fed8f584658e7920923c8
 }
