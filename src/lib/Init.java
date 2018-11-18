@@ -11,7 +11,7 @@ public class Init {
 	public static void INIT() {
 		
 		//ADD THE LIB PATH
-		btn = new File("");
+		btn = new File(Share.GENERAL_PATH);
 		Share.libPath.add(btn.getAbsolutePath()+File.separator+"lib"+File.separator);
 		//END
 		

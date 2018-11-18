@@ -6,7 +6,7 @@ public class Main
 {
 	public static void main(String[] a){
 		RUN(
-				"src\\test\\t1.ft");
+			"/storage/emulated/0/AppProjects/FastText/src/test/t2.ft");
 	}
 	
 	public static void RUN(String p){

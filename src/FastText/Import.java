@@ -5,6 +5,7 @@ public class Import {
 	
 	public static void IMPORT_FILE(String name) {
 		//System.out.println(PATH+name+".ft");
-		BlockReader.openAbsFile(PATH+name+".ft");
+		new BlockReader().openAbsFile(PATH+name+".ft");
 	}
 }
+

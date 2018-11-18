@@ -1,5 +1,7 @@
-let a > 5
-let b > 10
+import __this__
 
-if[a+b==b+a]:
-	print <?a+b?>
+DEB t3 START
+	!#do nothing...
+END
+
+run t3

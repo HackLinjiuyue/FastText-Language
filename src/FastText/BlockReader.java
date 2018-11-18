@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.management.GarbageCollectorMXBean;
 import java.util.HashMap;
 
 import Exceptions.NameNotDefine;
@@ -31,7 +30,7 @@ public class BlockReader {
 	// HashMap <String,Integer> LocalValues.NumValues = new
 	// HashMap<String,Integer>();
 
-	public static void openAbsFile(String path) {
+	public void openAbsFile(String path) {
 		if (path.substring(path.lastIndexOf(".") - 1, path.length()).equals("ft")) {
 
 		}
@@ -40,13 +39,13 @@ public class BlockReader {
 		readLineFromFile();
 	}
 
-	public static void openFile(String path) {
+	public void openFile(String path) {
 		file = new File(path);
 		getReader();
 		readLineFromFile();
 	}
 
-	static void getReader() {
+	private static void getReader() {
 		try {
 			reader = new BufferedReader(new FileReader(file));
 		} catch (FileNotFoundException e) {
@@ -54,7 +53,7 @@ public class BlockReader {
 		}
 	}
 	
-	private static void readLineFromFile(){
+	private void readLineFromFile(){
 		ArrayList FILE_LINE = new ArrayList();
 		String line;
 		try
@@ -116,7 +115,11 @@ public class BlockReader {
 
 					BlockMenager.getBlock(BLOCK_NAME).runBlock();
 				}
-					
+			}
+			if(line.startsWith(Grammar.FT_import)) {
+				line = line.replaceAll(" ","");
+				String NAME = line.substring(line.indexOf(Grammar.FT_import)+Grammar.FT_import.length(),line.length());
+				Import.IMPORT_FILE(NAME);
 			}
 		}
 	}
@@ -154,17 +157,20 @@ public class BlockReader {
 
 							letValue(VALUE_NAME, "str", VALUE);
 						} else if (Expression.isNotExpression(VALUE)) {
-							TYPE = VALUE.matches("^\\d{1,}") ? "int" : "str";
+							TYPE = VALUE.matches("^\\d{0,}") ? "int" : "str";
 
 							// System.out.println("VALUE_NAME="+VALUE_NAME);
-
-							// System.out.println("TYPE="+TYPE);
+							//System.out.println("TYPE="+TYPE);
+							
+							letValue(VALUE_NAME, TYPE, VALUE);
+							
 						} else if (VALUE.startsWith(Grammar.FT_expA)) {
 							// System.out.println("is exp"+VALUE);
 							VALUE = String.valueOf(Expression.solveExpression(Expression.getExpression(VALUE)));
 							TYPE = VALUE.matches("\\d+") ? "int" : "str";
+							
 							letValue(VALUE_NAME, TYPE, VALUE);
-						} 
+						}
 
 					}
 
@@ -224,11 +230,13 @@ public class BlockReader {
 					/*
 					 * import [FILE NAME]
 					 * */
+					 
+					 //Can not import in block
 					
-					if(line.startsWith(Grammar.FT_import)) {
-						String NAME = line.substring(line.indexOf(Grammar.FT_import)+Grammar.FT_import.length(),line.length());
-						Import.IMPORT_FILE(NAME);
-					}
+//					if(line.startsWith(Grammar.FT_import)) {
+//						String NAME = line.substring(line.indexOf(Grammar.FT_import)+Grammar.FT_import.length(),line.length());
+//						Import.IMPORT_FILE(NAME);
+//					}
 					
 				} catch (StringIndexOutOfBoundsException e) {
 					e.printStackTrace();

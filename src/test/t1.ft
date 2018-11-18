@@ -6,6 +6,7 @@ let e = 12
 
 print b
 print c
+print __VERSION__
 
 if[e <= c+d]->m
 if[c+d > d+c]

@@ -1,4 +1,4 @@
-START
+DEB __main__ START
 
 	!# AUTO IMPORT THIS FILE
 	
@@ -6,4 +6,4 @@ START
 	
 END
 
-run main
+run __main__

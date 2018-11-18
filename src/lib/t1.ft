@@ -3,7 +3,6 @@ let b = 6
 let c = 6
 let d = 6
 let e = 12
-
 END
 
 run main
