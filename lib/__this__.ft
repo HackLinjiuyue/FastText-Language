@@ -2,14 +2,14 @@ DEB __this__ START
 	let __A1__ = r<Hey my friend!>
 	let __A2__ = r<Welcome to use FastText>
 	let __A3__ = r<This is a script language>
-	let __A4__ = r<By a student>
+	!#let __A4__ = r<By a student>
 	let __A5__ = r<But there also have lots of bug>
 	let __A6__ = r<Everyone can fix or update it!>
 	
 	print __A1__
 	print __A2__
 	print __A3__
-	print __A4__
+	!#print __A4__
 	print __A5__
 	print __A6__
 END

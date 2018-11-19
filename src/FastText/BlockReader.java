@@ -11,6 +11,7 @@ import Exceptions.NameNotDefine;
 import Exceptions.SymbolSyntaxError;
 import Exceptions.SyntaxError;
 import java.util.*;
+import API.OutWriter;
 
 /*
 *======================================
@@ -238,6 +239,16 @@ public class BlockReader {
 						Import.IMPORT_FILE(NAME);
 					}
 					
+					/*
+					* del [name]
+					*/
+					
+					if(line.startsWith(Grammar.FT_delValue)){
+						LocalValues.del(line.substring(
+													line.indexOf(Grammar.FT_delValue)+Grammar.FT_delValue.length(),
+													line.length()));
+					}
+					
 				} catch (StringIndexOutOfBoundsException e) {
 					e.printStackTrace();
 					// throw new SyntaxError(Countline);
@@ -265,9 +276,11 @@ public class BlockReader {
 
 	static void outValue(String value) {
 		if (LocalValues.values.containsKey(value)) {
-			System.out.println(LocalValues.values.get(value));
+			//System.out.println(LocalValues.values.get(value));
+			OutWriter.println_to_console(LocalValues.values.get(value));
 		} else if (LocalValues.NumValues.containsKey(value)) {
-			System.out.println(LocalValues.NumValues.get(value));
+			//System.out.println(LocalValues.NumValues.get(value));
+			OutWriter.println_to_console(String.valueOf(LocalValues.NumValues.get(value)));
 		} else{
 			throw new NameNotDefine(value);
 		}

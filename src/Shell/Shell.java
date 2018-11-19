@@ -1,6 +1,8 @@
 package Shell;
+
 import FastText.*;
 import lib.Init;
+import API.*;
 
 import java.util.*;
 
@@ -20,8 +22,8 @@ public class Shell
 	@SuppressWarnings("resource")
 	public static void SHELL(){
 
-		System.out.println("the Shell for FastText "+Share.VERSION);
-		System.out.println("================Shell================");
+		OutWriter.println_to_console ("the Shell for FastText "+Share.VERSION);
+		OutWriter.println_to_console ("================Shell================");
 
 
 		while(true){
@@ -32,7 +34,7 @@ public class Shell
 				BlockReader.ReadLine(line);
 				line.clear();
 			}else{
-				System.out.print(NOW+" >>");
+				OutWriter.print_to_console(NOW+" >>");
 				sline = new Scanner(System.in).nextLine();
 				line.add(sline);
 			}

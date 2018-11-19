@@ -5,6 +5,8 @@ public class Grammar
 	public static final String FT_letValueA = "let";
 	public static final String FT_letValueB = "=";
 	
+	public static final String FT_delValue = "del";
+	
 	public static final String FT_out = "print";
 	
 	public static final String FT_getValue = "$";

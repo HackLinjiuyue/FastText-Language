@@ -16,7 +16,7 @@ public class Init {
 		//END
 		
 		//AUTO IMPORT __bulitins__ BLOCK
-		Import.IMPORT_FILE("__bulitins__");
+		Import.IMPORT_FILE("__builtins__");
 		//END
 		
 		//ADD SELF INFO

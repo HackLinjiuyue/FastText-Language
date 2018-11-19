@@ -1,0 +1,13 @@
+DEB __builtins__ START
+	!# AUTO IMPORT THIS FILE
+	
+	let __VERSION__ = r<FastText version = 0.5.1>
+	
+END
+
+DEB __HELP__ START
+	let __HELP__ = r<HOW TO : there is no help (◦˙▽˙◦)>
+	print __HELP__
+END
+
+run __builtins__
